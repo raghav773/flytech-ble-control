@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fly Tech BLE Control</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">BLE device controller</p>
+          <h1>Fly Tech BLE Control</h1>
+        </div>
+        <div class="connection-pill" id="connectionState">Disconnected</div>
+      </section>
+
+      <section class="panel">
+        <div class="toolbar">
+          <button id="connectButton" type="button">Connect</button>
+          <button id="disconnectButton" type="button" disabled>Disconnect</button>
+          <button id="reconnectButton" type="button" disabled>Reconnect</button>
+        </div>
+        <p class="state-detail" id="connectionDetail">
+          Configure the iPhone peripheral, then connect from Chrome or Edge.
+        </p>
+
+        <p class="support-message" id="supportMessage" hidden></p>
+
+        <div class="status-grid">
+          <div class="metric">
+            <span class="metric-label">Status</span>
+            <strong id="statusValue">--</strong>
+            <span class="metric-unit">0-100</span>
+          </div>
+
+          <div class="metric">
+            <span class="metric-label">Control</span>
+            <strong id="controlValue">0</strong>
+            <span class="metric-unit">0-255</span>
+          </div>
+        </div>
+
+        <label class="slider-row" for="controlSlider">
+          <span>Control value</span>
+          <input id="controlSlider" type="range" min="0" max="255" value="0" disabled />
+        </label>
+
+        <div class="quick-actions" aria-label="Quick control values">
+          <button class="secondary" type="button" data-control-value="0" disabled>0</button>
+          <button class="secondary" type="button" data-control-value="128" disabled>128</button>
+          <button class="secondary" type="button" data-control-value="255" disabled>255</button>
+        </div>
+      </section>
+
+      <section class="panel profile-panel">
+        <div class="section-heading">
+          <h2>BLE Profile</h2>
+          <span class="profile-note">nRF Connect simulator</span>
+        </div>
+        <dl class="profile-grid">
+          <div>
+            <dt>Service</dt>
+            <dd>0000FF00-0000-1000-8000-00805F9B34FB</dd>
+          </div>
+          <div>
+            <dt>Status</dt>
+            <dd>FF01 · Read + Notify · 0-100</dd>
+          </div>
+          <div>
+            <dt>Control</dt>
+            <dd>FF02 · Write · 0-255</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="panel">
+        <div class="section-heading">
+          <h2>Event Log</h2>
+          <button class="secondary" id="clearLogButton" type="button">Clear</button>
+        </div>
+        <ol class="log" id="eventLog" aria-live="polite"></ol>
+      </section>
+    </main>
+
+    <script src="app.js" type="module"></script>
+  </body>
+</html>

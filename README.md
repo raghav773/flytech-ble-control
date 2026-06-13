@@ -87,21 +87,14 @@ The app also subscribes to `FF01` notifications. nRF Connect iOS can be inconsis
 
 ## Production Hardening
 
-For a production mobile app, I would move the BLE behavior into an explicit state machine with states such as `idle`, `scanning`, `connecting`, `discoveringServices`, `subscribing`, `ready`, `needsReconnect`, `reconnecting`, and `failed`. That keeps UI state, retries, and command availability predictable.
+For production, I would move BLE operations into an explicit state machine covering scan, connect, service discovery, subscription, ready, reconnecting, and failed states. That would keep the UI, retries, and command availability predictable.
 
-I would add bounded automatic reconnect with backoff and jitter, but only after distinguishing intentional disconnects from unexpected drops. The app should rediscover services after reconnect, resubscribe to notifications, and drain any queued commands only after the device is fully ready.
+I would add bounded automatic reconnect with backoff, service rediscovery, notification resubscription, and a clear distinction between intentional disconnects and unexpected drops.
 
-Writes should go through a serialized command queue with timeouts, cancellation, and optional acknowledgement/read-back. If the physical device supports acknowledgements, the UI should reflect confirmed device state rather than only optimistic local state.
-
-Error handling should cover Bluetooth being off, permission denial, scan timeout, device not found, missing services, missing characteristics, invalid characteristic payloads, notification subscription failure, write failure, and stale GATT handles. For multiple devices, I would add a discovered-device list, stable display names, per-device state, and safeguards to prevent commands from going to the wrong peripheral.
-
-For observability, I would keep structured BLE logs with timestamps, operation names, GATT errors, selected device identity, and app version. Those logs should be exportable from the app for support and debugging.
+I would also serialize writes through a command queue with timeouts and optional device acknowledgements, then add structured logs for GATT errors, device identity, app version, and operation timing.
 
 ## With More Time
 
-- Add a scan timeout and clearer device-not-found UI
+- Add scan timeout, Bluetooth-off, and device-not-found flows
 - Persist remembered devices where browser support allows it
-- Add a stronger stale-connection heartbeat
-- Add automated tests around byte parsing and state transitions
-- Package as an installable PWA
-- Record a short demo showing connect, read, status update, write, reconnect, and disconnect
+- Add automated tests around byte parsing and BLE state transitions

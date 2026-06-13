@@ -95,6 +95,6 @@ I would also serialize writes through a command queue with timeouts and optional
 
 ## With More Time
 
-- Add scan timeout, Bluetooth-off, and device-not-found flows
+- Improve scan timeout, Bluetooth-off, and device-not-found messaging
 - Persist remembered devices where browser support allows it
 - Add automated tests around byte parsing and BLE state transitions

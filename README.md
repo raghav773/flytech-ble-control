@@ -4,6 +4,10 @@ A small Web Bluetooth app for the Fly Tech Services BLE take-home project. It co
 
 This implementation was tested with an iPhone running nRF Connect for Mobile as the simulated peripheral and Chrome on Windows as the BLE central.
 
+## Demo Video
+
+[Watch the demo video](https://drive.google.com/file/d/13yEC-zHey0L4uiEk2FP1s-eFP5N3ocvn/view?usp=drive_link)
+
 ## BLE Profile
 
 | Item | UUID | Properties |
